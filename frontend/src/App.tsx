@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GeneralPracticeMetrics from "./components/GeneralPracticeMetrics";
+import NewComp from "./components/new_comp";
 import TimeToSignOff from "./components/TimeToSignOff";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
@@ -28,6 +29,15 @@ const App = () => {
               </FilterProvider>
             }
           />
+          <Route
+            path="/Newcomp"
+            element={
+              <FilterProvider>
+                <NewComp />
+              </FilterProvider>
+            }
+          />
+
         </Route>
       </Routes>
     </BrowserRouter>

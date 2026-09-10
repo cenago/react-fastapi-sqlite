@@ -16,6 +16,9 @@ const Layout = () => {
             <li>
               <a href="/time-to-sign-off">Time to Sign Off</a>
             </li>
+            <li>
+              <a href="/NewComp">New Component</a>
+            </li>
           </ul>
         </nav>
       </header>

@@ -80,11 +80,12 @@ async def get_general_practice_metrics(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
 
+
 @app.get("/time-to-sign-off")
 async def get_time_to_sign_off(
-    db: sqlite3.Connection = Depends(get_db_connection),
-    clinic: Optional[str] = Query(None),
-    provider: Optional[str] = Query(None)
+        db: sqlite3.Connection = Depends(get_db_connection),
+        clinic: Optional[str] = Query(None),
+        provider: Optional[str] = Query(None)
 ):
     try:
         query = """
@@ -93,16 +94,31 @@ async def get_time_to_sign_off(
         FROM encounters
         WHERE 1=1
         """
-        
+
         if clinic:
             query += f" AND clinicName = '{clinic}'"
         if provider:
             query += f" AND providerFullName = '{provider}'"
-        
+
         query += " GROUP BY hourOfDay"
-        
+
         df = pd.read_sql_query(query, db)
         return df.to_dict(orient="records")
+    except sqlite3.DatabaseError as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
+
+
+@app.get("/new_comp")
+async def get_new_comp(
+        db: sqlite3.Connection = Depends(get_db_connection),
+        clinic: Optional[str] = Query(None),
+        provider: Optional[str] = Query(None)
+):
+    try:
+        ab = {"name": "Elangovan"}
+        return ab
     except sqlite3.DatabaseError as e:
         raise HTTPException(status_code=500, detail=f"Database error: {e}")
     except Exception as e:
